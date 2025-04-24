@@ -1,11 +1,14 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch  } from "vue";
 import { initFlowbite } from "flowbite";
 
-const switchThemeIcon = ref('');
+const switchThemeIcon = ref();
+const test = ref();
 
-watch(localStorage.getItem('color-theme'),(newValue) => {
-    switchThemeIcon.value = newValue
+
+watch(switchThemeIcon,(newValue) => {
+    console.log(newValue);
+
 })
 
 function setThemeOnLoad() {
@@ -20,9 +23,11 @@ function switchTheme() {
     if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         document.documentElement.classList.remove('dark')
         localStorage.setItem('color-theme', 'light');
+        switchThemeIcon.value = 'light';
     } else {
         document.documentElement.classList.add('dark');
         localStorage.setItem('color-theme', 'dark');
+        switchThemeIcon.value = 'dark';
     }
 }
 
@@ -133,7 +138,7 @@ onMounted(() => {
                     >
                         <div v-if="switchThemeIcon === 'dark'">
                             <svg id="theme-toggle-dark-icon"
-                                
+
                                 class="w-6 h-6"
                                 aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg"
