@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref, watch  } from "vue";
 import { initFlowbite } from "flowbite";
+import { Link } from "@inertiajs/vue3";
 
 const switchThemeIcon = ref();
 const test = ref();
@@ -14,8 +15,10 @@ watch(switchThemeIcon,(newValue) => {
 function setThemeOnLoad() {
     if (localStorage.getItem("color-theme") === "dark" ||(!("color-theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
         document.documentElement.classList.add("dark");
+        switchThemeIcon.value = 'dark';
     } else {
         document.documentElement.classList.remove("dark");
+        switchThemeIcon.value = 'light';
     }
 }
 
@@ -704,7 +707,8 @@ onMounted(() => {
                                         d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
                                     ></path>
                                 </svg>
-                                <div
+
+                                <div href="route('logout')" method="post" as="button"
                                     class="text-sm text-gray-900 dark:text-white"
                                 >
                                     Logout
@@ -842,11 +846,12 @@ onMounted(() => {
                             aria-labelledby="dropdown"
                         >
                             <li>
-                                <a
+                                <!-- <a
                                     href="#"
                                     class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                                     >Sign out</a
-                                >
+                                > -->
+                                <a><Link :href="route('logout')" method="post" as="button" class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Logout</Link></a>
                             </li>
                         </ul>
                     </div>
